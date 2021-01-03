@@ -385,6 +385,23 @@ $notifyNotification = 'true';
 /* Style Settings */
 
 $copyrightSafe = true;
+
+$iconRepoArray = [						   // Multiple Icon repos can be added
+    'Default' => 'static/ICONS'
+];
+$iconFolderArray = [						   // Default Icon repo to be used
+    'gym' => $iconRepoArray['Default'],
+    'invasion' => $iconRepoArray['Default'],
+    'misc' => $iconRepoArray['Default'],
+    'pokemon' => $iconRepoArray['Default'],
+    'raid' => $iconRepoArray['Default'],
+    'reward' => $iconRepoArray['Default'],
+    'team' => $iconRepoArray['Default'],
+    'type' => $iconRepoArray['Default'],
+    'weather' => $iconRepoArray['Default']
+];
+
+/* This will be deprecated soon */
 $noCostumeIcons = true;                                                              // Set to true if you $iconRepository doesnt support costume icons.
 $iconRepository = '';						                                         // URLs or folder paths are allowed
 $noMultipleRepos = true;                                                             // To enable Multiple icon packs:
@@ -394,6 +411,8 @@ $iconRepos = [["Standard","$iconRepository"],                                   
               ["Some Icon Pack","path/to/iconpack/"],                                // Example for a pack located on your server at static/icons/pack01/, named "Some Icon Pack" in the Frontend
               ["Some Other Iconpack","https://website.com/sub/folder/"],             // Example for a pack located on a website
               ["Another Iconpack","https://AnotherURL.com/some/other/subfolders/"]]; // You May add different iconPacks here so mapusers can switch between them
+
+/* This will be deprecated soon */
 
 $noMapStyle = false;
 $mapStyle = 'openstreetmap';                                        // openstreetmap, darkmatter, styleblackandwhite, styletopo, stylesatellite

@@ -370,12 +370,30 @@ $notifyNotification = 'true';                                       // true/fals
 
 /* Style Settings */
 $noDarkMode = false;
-
 $copyrightSafe = true;
+
+$iconRepoArray = [						   // Multiple Icon repos can be added
+    'Default' => 'static/ICONS'
+];
+$iconFolderArray = [						   // Default Icon repo to be used
+    'gym' => $iconRepoArray['Default'],
+    'invasion' => $iconRepoArray['Default'],
+    'misc' => $iconRepoArray['Default'],
+    'pokemon' => $iconRepoArray['Default'],
+    'raid' => $iconRepoArray['Default'],
+    'reward' => $iconRepoArray['Default'],
+    'team' => $iconRepoArray['Default'],
+    'type' => $iconRepoArray['Default'],
+    'weather' => $iconRepoArray['Default']
+];
+
+/* This will be deprecated soon */
 $noCostumeIcons = true;                                            // Set to true if you $iconRepository doesnt support costume icons. true/false
 $iconRepository = 'https://raw.githubusercontent.com/whitewillem/PogoAssets/resized/icons_large/';
 $noMultipleRepos = true;
 $iconRepos = [["Standard","$iconRepository"]];
+/* This will be deprecated soon */
+
 
 $noMapStyle = false;                                                // true/false
 $mapStyle = 'openstreetmap';                                        // openstreetmap, darkmatter, styleblackandwhite, styletopo, stylesatellite
