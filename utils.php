@@ -361,6 +361,8 @@ function randomNum()
     return implode($pass); //turn the array into a string
 }
 function getIcon($category, $pokemonId, $form = 0, $evolution = 0, $gender = 0, $costume = 0, $shiny = false) {
+    global $iconFolderArray;
+
     switch ($category) {
         case 'pokemon':
             $evolutionSuffixes = $evolution ? '-e' . $evolution : '';
@@ -369,7 +371,7 @@ function getIcon($category, $pokemonId, $form = 0, $evolution = 0, $gender = 0, 
             $genderSuffixes = $gender ? '-g' . $gender : '';
             $shinySuffixes = $shiny ? '-shiny' : '';
             $result = $pokemonId . $formSuffixes . $costumeSuffixes . $genderSuffixes . $shinySuffixes;
-            $index = file_get_contents($iconFolderArray['pokemon'] . 'index.json');
+            $index = json_decode(file_get_contents($iconFolderArray['pokemon'] . 'pokemon/index.json'), true);
             if (in_array($result, $index)) {
                 return $result;
             } else {

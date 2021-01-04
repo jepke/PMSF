@@ -91,7 +91,7 @@ if (strtolower($map) === "rdm") {
     <?php
     function pokemonFilterImages($noPokemonNumbers, $onClick = '', $pokemonToExclude = array(), $num = 0)
     {
-        global $mons, $copyrightSafe, $iconRepository, $numberOfPokemon;
+        global $mons, $copyrightSafe, $iconFolderArray, $numberOfPokemon;
         if (empty($mons)) {
             $json = file_get_contents('static/dist/data/pokemon.min.json');
             $mons = json_decode($json, true);
@@ -124,7 +124,7 @@ if (strtolower($map) === "rdm") {
                 <span style="display:none" class="name">' . i8ln($name) . '</span>
                 <span style="display:none" class="id">' . $k . '</span>';
                 if (! $copyrightSafe) {
-                    echo "<img src='" . $iconRepository . "pokemon_icon_" . $id . "_00.png' style='width:48px;height:48px;'/>";
+                    echo "<img src='" . $iconFolderArray['pokemon'] . 'pokemon/'. getIcon('pokemon', $k) . ".png' style='width:48px;height:48px;'/>";
                 } else {
                     echo "<img src='static/icons-safe/pokemon_icon_" . $id . "_00.png' style='width:48px;height:48px;'/>";
                 }
