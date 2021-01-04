@@ -124,7 +124,7 @@ if (strtolower($map) === "rdm") {
                 <span style="display:none" class="name">' . i8ln($name) . '</span>
                 <span style="display:none" class="id">' . $k . '</span>';
                 if (! $copyrightSafe) {
-                    echo "<img src='" . $iconFolderArray['pokemon'] . 'pokemon/'. getIcon('pokemon', $k) . ".png' style='width:48px;height:48px;'/>";
+                    echo "<img src='" . $iconFolderArray['pokemon'] . 'pokemon/'. getIcon('pokemon', $k, null, null, null, null, null, null, null, null) . ".png' style='width:48px;height:48px;'/>";
                 } else {
                     echo "<img src='static/icons-safe/pokemon_icon_" . $id . "_00.png' style='width:48px;height:48px;'/>";
                 }
@@ -146,7 +146,7 @@ if (strtolower($map) === "rdm") {
 
     function energyFilterImages($noPokemonNumbers, $onClick = '', $energyToExclude = array(), $num = 0)
     {
-        global $mons, $copyrightSafe, $iconRepository, $numberOfPokemon;
+        global $mons, $copyrightSafe, $iconFolderArray, $numberOfPokemon;
         if (empty($mons)) {
             $json = file_get_contents('static/dist/data/pokemon.min.json');
             $mons = json_decode($json, true);
@@ -172,7 +172,7 @@ if (strtolower($map) === "rdm") {
                 <span style="display:none" class="name">' . i8ln($name) . '</span>
                 <span style="display:none" class="id">' . $k . '</span>';
                 if (! $copyrightSafe) {
-                    echo '<img src="' . $iconRepository . 'rewards/reward_mega_energy_' . $k . '.png" style="width:48px;height:48px;"/>';
+                    echo '<img src="' . $iconFolderArray['reward'] . 'reward/' . getIcon('reward', $k, null, null, null, null, null, '12', null, null) . '.png" style="width:48px;height:48px;"/>';
                 } else {
                     echo '<img src="static/icons-safe/pokemon_icon_' . $k . '_00.png" style="width:48px;height:48px;"/>';
                 }
@@ -194,7 +194,7 @@ if (strtolower($map) === "rdm") {
 
     function itemFilterImages($noItemNumbers, $onClick = '', $itemsToExclude = array(), $num = 0)
     {
-        global $items, $copyrightSafe, $iconRepository;
+        global $items, $copyrightSafe, $iconFolderArray;
         if (empty($items)) {
             $json = file_get_contents('static/dist/data/items.min.json');
             $items = json_decode($json, true);
@@ -207,7 +207,7 @@ if (strtolower($map) === "rdm") {
 
             if (! in_array($k, $itemsToExclude)) {
                 if (! $copyrightSafe) {
-                    echo '<span class="item-icon-sprite" data-value="' . $k . '" onclick="' . $onClick . '"><span style="display:none" class="name">' . i8ln($name) . '</span><span style="display:none" class="id">' . $k . '</span><img src="' . $iconRepository . 'rewards/reward_' . $k . '_1.png" style="width:48px;height:48px;"/>';
+                    echo '<span class="item-icon-sprite" data-value="' . $k . '" onclick="' . $onClick . '"><span style="display:none" class="name">' . i8ln($name) . '</span><span style="display:none" class="id">' . $k . '</span><img src="' . $iconFolderArray['reward'] . 'reward/' . getIcon('reward', null, null, null, null, null, null, '2', $k, 1) . '.png" style="width:48px;height:48px;"/>';
                 } else {
                     echo '<span class="item-icon-sprite" data-value="' . $k . '" onclick="' . $onClick . '"><span style="display:none" class="name">' . i8ln($name) . '</span><span style="display:none" class="id">' . $k . '</span><img src="static/icons-safe/rewards/reward_' . $k . '_1.png" style="width:48px;height:48px;"/>';
                 }
@@ -228,7 +228,7 @@ if (strtolower($map) === "rdm") {
     }
     function gruntFilterImages($noGruntNumbers, $onClick = '', $gruntsToExclude = array(), $num = 0)
     {
-        global $grunts;
+        global $grunts, $iconFolderArray;
         if (empty($grunts)) {
             $json = file_get_contents('static/dist/data/grunttype.min.json');
             $grunts = json_decode($json, true);
@@ -241,7 +241,7 @@ if (strtolower($map) === "rdm") {
             $gender = $grunt['grunt'];
 
             if (! in_array($g, $gruntsToExclude)) {
-                echo '<span class="grunt-icon-sprite" data-value="' . $g . '" onclick="' . $onClick . '"><span style="display:none" class="gender">' . i8ln($gender) . '</span><span style="display:none" class="type">' . i8ln($type) . '</span><span style="display:none" class="id">' . $g . '</span><img src="static/grunttype/' . $g . '.png" style="width:48px;height:48px;"/>';
+                echo '<span class="grunt-icon-sprite" data-value="' . $g . '" onclick="' . $onClick . '"><span style="display:none" class="gender">' . i8ln($gender) . '</span><span style="display:none" class="type">' . i8ln($type) . '</span><span style="display:none" class="id">' . $g . '</span><img src="' . $iconFolderArray['invasion'] . 'invasion/' . getIcon('invasion', null, null, null, null, null, null, null, null, null, $g) . '.png" style="width:48px;height:48px;"/>';
                 if (! $noGruntNumbers) {
                     echo '<span class="grunt-number">' . $g . '</span>';
                 }

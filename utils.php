@@ -360,7 +360,7 @@ function randomNum()
     }
     return implode($pass); //turn the array into a string
 }
-function getIcon($category, $pokemonId, $form = 0, $evolution = 0, $gender = 0, $costume = 0, $shiny = false) {
+function getIcon($category, $pokemonId = 0, $form = 0, $evolution = 0, $gender = 0, $costume = 0, $shiny = false, $rewardType = 0, $itemId = 0, $amount = 0, $invasionId = 0) {
     global $iconFolderArray;
 
     switch ($category) {
@@ -380,9 +380,25 @@ function getIcon($category, $pokemonId, $form = 0, $evolution = 0, $gender = 0, 
             return '0';
             break;
         case 'reward':
+            $rewardType = $rewardType ? $rewardType : '';
+            $pokemonSuffixes = $pokemonId ? '-p' . $pokemonId : '';
+            $itemSuffixes = $itemId ? '-i' . $itemId : '';
+            $amountSuffixes = $amount ? '-a' . $amount : '';
+            $result = $rewardType . $itemSuffixes . $pokemonSuffixes . $amountSuffixes;
+            $index = json_decode(file_get_contents($iconFolderArray['reward'] . 'reward/index.json'), true);
+            if (in_array($result, $index)) {
+                return $result;
+            }
             return '0';
             break;
-
+        case 'invasion':
+            $result = $invasionId;
+            $index = json_decode(file_get_contents($iconFolderArray['invasion'] . 'invasion/index.json'), true);
+            if (in_array($result, $index)) {
+                return $result;
+            }
+            return '0';
+            break;
     return '0';
     }
 }
