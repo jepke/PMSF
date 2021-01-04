@@ -374,9 +374,10 @@ function getIcon($category, $pokemonId, $form = 0, $evolution = 0, $gender = 0, 
             $index = json_decode(file_get_contents($iconFolderArray['pokemon'] . 'pokemon/index.json'), true);
             if (in_array($result, $index)) {
                 return $result;
-            } else {
-                return '0';
+            } else if (in_array($pokemonId, $index)) {
+                return $pokemonId;
             }
+            return '0';
             break;
         case 'reward':
             return '0';
