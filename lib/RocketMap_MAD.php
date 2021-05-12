@@ -55,8 +55,8 @@ class RocketMap_MAD extends RocketMap
             $params[':oneLat'] = $oNeLat;
             $params[':oneLng'] = $oNeLng;
         }
-        global $noBoundaries, $boundaries;
-        if (!$noBoundaries) {
+        global $noBoundaries, $boundaries, $showPokemonsOutsideBoundaries;
+        if (!$noBoundaries && !$showPokemonsOutsideBoundaries) {
             $conds[] = "(ST_WITHIN(point(p.latitude,p.longitude),ST_GEOMFROMTEXT('POLYGON(( " . $boundaries . " ))')))";
         }
         if ($tstamp > 0) {
@@ -150,8 +150,8 @@ class RocketMap_MAD extends RocketMap
         $date->setTimestamp(time());
         $params[':time'] = date_format($date, 'Y-m-d H:i:s');
 
-        global $noBoundaries, $boundaries;
-        if (!$noBoundaries) {
+        global $noBoundaries, $boundaries, $showPokemonsOutsideBoundaries;
+        if (!$noBoundaries && !$showPokemonsOutsideBoundaries) {
             $conds[] = "(ST_WITHIN(point(p.latitude,p.longitude),ST_GEOMFROMTEXT('POLYGON(( " . $boundaries . " ))')))";
         }
 
@@ -277,7 +277,6 @@ class RocketMap_MAD extends RocketMap
         $weathers = $db->query($query)->fetchAll(\PDO::FETCH_ASSOC);
         $data = array();
         foreach ($weathers as $weather) {
-            $weather['s2_cell_id'] = sprintf("%u", $weather['s2_cell_id']);
             $data["weather_" . $weather['s2_cell_id']] = $weather;
             $data["weather_" . $weather['s2_cell_id']]['condition'] = $data["weather_" . $weather['s2_cell_id']]['gameplay_weather'];
             unset($data["weather_" . $weather['s2_cell_id']]['gameplay_weather']);
@@ -303,8 +302,8 @@ class RocketMap_MAD extends RocketMap
             $params[':oneLat'] = $oNeLat;
             $params[':oneLng'] = $oNeLng;
         }
-        global $noBoundaries, $boundaries;
-        if (!$noBoundaries) {
+        global $noBoundaries, $boundaries, $showGymsOutsideBoundaries;
+        if (!$noBoundaries && !$showGymsOutsideBoundaries) {
             $conds[] = "(ST_WITHIN(point(latitude,longitude),ST_GEOMFROMTEXT('POLYGON(( " . $boundaries . " ))')))";
         }
         if ((!empty($raids) && $raids === 'true') && (!empty($gyms) && $gyms === 'false')) {
@@ -481,8 +480,8 @@ class RocketMap_MAD extends RocketMap
             $params[':oneLat'] = $oNeLat;
             $params[':oneLng'] = $oNeLng;
         }
-        global $noBoundaries, $boundaries;
-        if (!$noBoundaries) {
+        global $noBoundaries, $boundaries, $showSpawnsOutsideBoundaries;
+        if (!$noBoundaries && !$showSpawnsOutsideBoundaries) {
             $conds[] = "(ST_WITHIN(point(latitude,longitude),ST_GEOMFROMTEXT('POLYGON(( " . $boundaries . " ))')))";
         }
         if ($tstamp > 0) {
@@ -532,8 +531,8 @@ class RocketMap_MAD extends RocketMap
             $params[':oneLat'] = $oNeLat;
             $params[':oneLng'] = $oNeLng;
         }
-        global $noBoundaries, $boundaries;
-        if (!$noBoundaries) {
+        global $noBoundaries, $boundaries, $showStopsOutsideBoundaries;
+        if (!$noBoundaries && !$showStopsOutsideBoundaries) {
             $conds[] = "(ST_WITHIN(point(latitude,longitude),ST_GEOMFROMTEXT('POLYGON(( " . $boundaries . " ))')))";
         }
 
@@ -585,7 +584,7 @@ class RocketMap_MAD extends RocketMap
             }
             $dustSQL = '';
             if (!empty($dustamount) && !is_nan((float)$dustamount) && $dustamount > 0) {
-                $dustSQL .= "OR (quest_reward_type = 3 AND tq.quest_stardust > :amount)";
+                $dustSQL .= "OR (quest_reward_type = 3 AND tq.quest_stardust >= :amount)";
                 $params[':amount'] = intval($dustamount);
                 $params[':swLat'] = $swLat;
                 $params[':swLng'] = $swLng;
@@ -762,7 +761,7 @@ class RocketMap_MAD extends RocketMap
             $pokestop["grunt_type_gender"] = empty($grunttype_pid) ? null : i8ln($this->grunttype[$grunttype_pid]["grunt"]);
             $pokestop["encounters"] = empty($this->grunttype[$grunttype_pid]["encounters"]) ? null : $this->grunttype[$grunttype_pid]["encounters"];
             $pokestop["second_reward"] = empty($this->grunttype[$grunttype_pid]["second_reward"]) ? null : $this->grunttype[$grunttype_pid]["second_reward"];
-            $pokestop["lure_id"] = $pokestop["lure_id"] - 500;
+            $pokestop["lure_id"] = intval($pokestop["lure_id"]);
             $pokestop["url"] = ! empty($pokestop["url"]) ? preg_replace("/^http:/i", "https:", $pokestop["url"]) : null;
             $pokestop["quest_type"] = intval($pokestop["quest_type"]);
             $pokestop["quest_condition_type"] = 0;
@@ -851,8 +850,7 @@ class RocketMap_MAD extends RocketMap
         }
         global $noBoundaries, $boundaries;
         if (!$noBoundaries) {
-
-            $conds[] = "(ST_WITHIN(currentPos_raw),ST_GEOMFROMTEXT('POLYGON(( " . $boundaries . " ))'))";
+            $conds[] = "(ST_WITHIN(currentPos_raw,ST_GEOMFROMTEXT('POLYGON(( " . $boundaries . " ))')))";
         }
         global $hideDeviceAfterMinutes;
         if ($hideDeviceAfterMinutes > 0) {
